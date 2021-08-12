@@ -10,18 +10,24 @@
 
 5. 具体数据库https://gitee.com/zzf199407/database.git
 
+
 用法
+```
+前端页面插入一下代码
 <div class="laykefu-min">咨询客服</div>
 <link href="http://你的域名/static/customer/css/laykefu.css" rel="stylesheet" type="text/css" />
 <link href="http://你的域名/static/css/chat/css/jquery-sina-emotion.min.css" rel="stylesheet">
 <script src="http://你的域名/static/customer/js/laykefu.js"></script>
 <script type="text/javascript" src="http://你的域名/static/css/chat/js/jquery-sina-emotion.js"></script>
-<!-- <script type="text/javascript" src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
+
 <script type="text/javascript">
- // var vConsole = new window.VConsole();
+程序初始化
 laykefu.init({
     group: 1,//客服分组
     socket: '',//聊天服务器地址（随便填）
     face_path: 'http://chat.tuanzf.top/static/customer/images/face',//表情包路径
     upload_url: '/index/upload/uploadImg',//图片上传路径
 });
+```
+
+
