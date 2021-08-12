@@ -19,7 +19,7 @@ class Events {
             'client_id' => $client_id,
             'kefu_name' => '客服001',
             'kefu_id' => 5,
-            'content' => '您好，我是博主Just，很高兴你能查阅我的博客，希望您能在我博客上能获取您需要知识，如有不明白的，您可以加我微信Just_Tuan,方便咨询。'
+            'content' => '提示语句'
         ]));
     }
 
