@@ -1,0 +1,71 @@
+{include file='public/head'}
+<body>
+    <style media="screen" type="text/css">
+        header {
+    color: black;
+}
+    </style>
+    <div class="x-body">
+        <form class="layui-form" >
+            <input type="hidden" value="{$data.id}" name="id">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    角色名称
+                </label>
+                <div class="layui-input-block">
+                    <input autocomplete="off" value="{$data.title}" class="layui-input" id="title" lay-verify="required" name="title" placeholder="请输入角色名称" type="text">
+                    </input>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">启用状态</label>
+                <div class="layui-input-block">
+				    <input type="checkbox" name="status" {eq name="$data.status" value="1"}checked=""{/eq} lay-skin="switch" lay-text="正常|禁用">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn"  lay-filter="editSubmit" lay-submit=""  style="margin-left: 30%">
+                        提交
+                    </button>
+                     <button style="display: none;" class="layui-btn layui-btn-primary" id="reset" type="reset">
+                        重置
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+layui.use('form', function () {
+var form = layui.form,
+jq = layui.jquery;
+form.on('submit(editSubmit)', function (data) {
+/*
+console.log(data);
+return false;
+*/
+loading = layer.load(2, {
+	shade: [0.2, '#000']
+});
+var param = data.field;
+jq.post('edit_Groups', param, function (data) {
+if (data.code == 200) {
+	layer.close(loading);
+	layer.msg(data.msg, { icon: 1, time: 500 }, function () {
+	window.parent.location.reload();
+	var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.close(index);
+	});
+} else {
+	layer.close(loading);
+	layer.msg(data.msg, { icon: 2, time: 2000 });
+}
+});
+return false;
+});
+})
+</script>

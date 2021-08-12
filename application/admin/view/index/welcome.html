@@ -1,0 +1,118 @@
+{include file='public/head'}
+<div class="x-body">
+    <fieldset class="layui-elem-field">
+        <legend>
+            服务器信息
+        </legend>
+        <div class="layui-field-box">
+           
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th colspan="2" scope="col">
+                            服务器信息
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th width="30%">
+                            服务器计算机名
+                        </th>
+                        <td>
+                            <span id="lbServerName">
+                              <?php echo gethostbyaddr($_SERVER["REMOTE_ADDR"])?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            服务器IP地址
+                        </td>
+                        <td>
+                            {$_SERVER["REMOTE_ADDR"]}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            服务器域名
+                        </td>
+                        <td>
+                            {$_SERVER['SERVER_NAME']}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            服务器端口
+                        </td>
+                        <td>
+                            {$_SERVER['SERVER_PORT']}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            服务器版本
+                        </td>
+                        <td>
+                            <?php echo php_uname('s').php_uname('r')?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            本文件所在文件夹
+                        </td>
+                        <td>
+                            <?php echo __FILE__ ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            服务器操作系统
+                        </td>
+                        <td>
+                            <?php echo php_uname()?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PHP版本
+                        </td>
+                        <td>
+                            <?php echo PHP_VERSION?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PHP运行方式
+                        </td>
+                        <td>
+                            <?php echo php_sapi_name()?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            服务器的语言种类
+                        </td>
+                        <td>
+                            <?php echo $_SERVER['HTTP_ACCEPT_LANGUAGE']?>
+                        </td>
+                    </tr>
+                  
+                    <tr>
+                        <td>
+                            服务器当前时间
+                        </td>
+                        <td>
+                           <?php echo date("Y-m-d H:i:s")?>
+                        </td>
+                    </tr>
+                  
+                    
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+    <blockquote class="layui-elem-quote layui-quote-nm">
+    </blockquote>
+</div>
+{include file='public/foot'}

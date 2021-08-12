@@ -1,0 +1,90 @@
+{include file='public/head'}
+<body>
+<style type="text/css" media="screen">
+header {
+    color: black;
+}
+
+</style>
+
+
+<div class="x-body" >
+	<form class="layui-form">
+           <div class="layui-form-item">
+		    <label class="layui-form-label">text协议IP+端口</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="register"  name="register" lay-verify="required" autocomplete="off" value="{$sysconfig['register']}" placeholder="text协议IP+端口(0.0.0.0:1236)" class="layui-input">
+		    </div>
+		  </div>
+
+		<div class="layui-form-item">
+		    <label class="layui-form-label">服务注册地址IP+端口</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="registerAddress"  name="registerAddress" lay-verify="required" placeholder="请输入服务注册地址IP+端口(127.0.0.1:1236)" value="{$sysconfig['registerAddress']}" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">gateway进程IP+端口</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="gateway"  name="gateway" lay-verify="required" placeholder="请输入gateway进程(0.0.0.0:7272)" value="{$sysconfig['gateway']}" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">内网ip</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="lanIp"  name="lanIp" lay-verify="required" placeholder="分布式部署时请设置成内网ip（非127.0.0.1）" value="{$sysconfig['lanIp']}" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">进程数</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="count"  name="count" lay-verify="required" placeholder="建议与cpu核数相同" value="{$sysconfig['count']}" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label">内部通讯端口</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="startPort"  name="startPort" lay-verify="required" placeholder="假如2300，起始端口为2300会使用2300 2301 2302 2303 4个端口" value="{$sysconfig['startPort']}" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+
+
+
+        
+
+
+		<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button style="margin-left: 20%" class="layui-btn" lay-submit="" lay-filter="addSubmit">提交</button>
+		      <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+		</div>
+
+
+	</form>
+</div>
+</body>
+<script>
+layui.use('form', function () {
+var form = layui.form,
+jq = layui.jquery;
+form.on('submit(addSubmit)', function (data) {
+loading = layer.load(2, {
+	shade: [0.2, '#000']
+});
+var param = data.field;
+jq.post('addconfig', param, function (data) {
+if (data.code == 200) {
+	layer.close(loading);
+	layer.msg(data.msg, { icon: 1, time: 1000 }, function () {
+	window.location.reload();
+	});
+} else {
+	layer.close(loading);
+	layer.msg(data.msg, { icon: 2, time: 2000 });
+}
+});
+return false;
+});
+})
+</script>

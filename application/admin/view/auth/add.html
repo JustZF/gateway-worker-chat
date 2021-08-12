@@ -1,0 +1,99 @@
+{include file='public/head'}
+<body>
+<style type="text/css" media="screen">
+header {
+    color: black;
+}
+
+</style>
+
+
+<div class="x-body" >
+	<form class="layui-form">
+<div class="layui-form-item">
+                <label class="layui-form-label">
+                    上级菜单
+                </label>
+                <div class="layui-input-block">
+                    <select lay-filter="aihao" name="pid" id='pid'>
+                        <option value="0">顶级菜单
+                        </option>
+                         {volist name='auth' id='vo'}
+                                <option value="{$vo.id}">{$vo.level-1|str_repeat='丨--',###}{$vo.title}</option>
+                         {/volist}
+                    </select>
+                </div>
+            </div>
+           <div class="layui-form-item">
+		    <label class="layui-form-label">菜单名称</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="title"  name="title" lay-verify="required" autocomplete="off" placeholder="请输入菜单名称" class="layui-input">
+		    </div>
+		  </div>
+
+		<div class="layui-form-item">
+		    <label class="layui-form-label">控制器</label>
+		    <div class="layui-input-block">
+		    <input type="text" id="name"  name="name" lay-verify="required" placeholder="请输入控制器" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+
+	  	<div class="layui-form-item">
+                <label class="layui-form-label">
+                    <a style="color:green" target="_target" href="http://www.layui.com/doc/element/icon.html">图标icon(点击)</a>
+                </label>
+		    <div class="layui-input-block">
+		    	<input type="text"  id="icon"  name="icon"  placeholder="请输入图标类，不熟悉font-some请留空" autocomplete="off" class="layui-input">
+		    </div>
+	  	</div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                     <select name="status" id='status' lay-filter="aihao" name="status">
+                        <option value="1" >显示</option>
+                          <option value="0" >隐藏</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-block">
+                    <input autocomplete="off" class="layui-input" id="sort"  lay-verify="required" name="sort" placeholder="排序数值越大排列越靠前" type="text" value="0">
+                </div>
+            </div>
+
+
+		<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button style="margin-left: 20%" class="layui-btn" lay-submit="" lay-filter="addSubmit">提交</button>
+		      <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+		</div>
+
+
+	</form>
+</div>
+</body>
+<script>
+layui.use('form', function () {
+var form = layui.form,
+jq = layui.jquery;
+form.on('submit(addSubmit)', function (data) {
+loading = layer.load(2, {
+	shade: [0.2, '#000']
+});
+var param = data.field;
+jq.post('add', param, function (data) {
+if (data.code == 200) {
+	layer.close(loading);
+	layer.msg(data.msg, { icon: 1, time: 3000 });
+	$("#reset").click();
+} else {
+	layer.close(loading);
+	layer.msg(data.msg, { icon: 2, time: 3000 });
+}
+});
+return false;
+});
+})
+</script>

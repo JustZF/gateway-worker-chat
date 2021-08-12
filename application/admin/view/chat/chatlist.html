@@ -1,0 +1,110 @@
+{include file="public/head"}
+    <body>
+    <div class="x-body">
+       <button class="layui-btn  layui-btn-small layui-btn-danger" onclick="delAll()">批量删除</button>
+        <button class="layui-btn layui-btn-small " 
+        onclick="x_admin_show('添加用户','showAdd.html',500,410)"></i>添加用户</button>
+        <button onclick="javascript:location.reload()" class="layui-btn layui-btn-small">刷新</button>
+        <span class="x-right" style="line-height:40px">共有数据:<i class="i_count">{$users->total()}</i>条</span>
+    <table class="layui-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>ID</th>
+            <th>登录名</th>
+            <th>创建时间</th>
+            <th>最后登录时间</th>
+            <th>最后登录IP</th>
+            <th>客服链接</th>
+			<th>状态</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+        {volist name="users" id="vo"}
+        	<tr>
+	            <td>
+	              <div class="layui-form-checkbox" lay-skin="primary" data-id='{$vo.id}'><i class="layui-icon">&#xe605;</i></div>
+	            </td>
+	            <td>{$vo.id}</td>
+	            <td>{$vo.name}</td>
+	            <td width="80">{$vo.add_time}</td>
+                <td width="80">{$vo.add_time}</td>
+                {if condition="empty($vo.login_time)"}
+                     此用户还未使用
+                {else /}
+                    {$vo.login_time}
+                {/if}
+              </td>
+              <td>{$vo.login_ip}</td>
+                <td>{$url}/chat.php/index/index.html?toid={$vo.id}</td>
+			  <td><form class="layui-form">
+			  <input type="checkbox" name="state" value="{$vo.id}" {eq name="$vo.state" value="0"}checked=""{/eq} lay-skin="switch" lay-filter="switch" lay-text="正常|禁用">
+			   </form> </td>
+	            <td>
+				    <a href="record.html?foid={$vo.name}" class="layui-btn layui-btn-mini">列表</a>
+	                <button class="layui-btn layui-btn-mini" onclick="x_admin_show('编辑用户','showEdit.html?id={$vo.id}',500,410)">编辑</button>
+	             	<button onclick="delChat(this,{$vo.id})" class="layui-btn layui-btn-mini layui-btn-danger">删除</button>
+	           </td>
+	        </tr>
+        {/volist}
+    
+        </tbody>
+      </table>
+	      <div class="page">
+	        <div>
+	        	{$users->render()}
+	        </div>
+	      </div>
+    </div>
+</body>
+    <script>
+layui.use('form', function () {
+var form = layui.form,
+jq = layui.jquery;
+form.on('switch(switch)', function(data){
+var state=this.checked ? '0' : '1';
+            $.post("stateChat", {id: data.value,checked:state}, function(data) {
+			  if (data.code == 200) {
+                  layer.msg(data.msg,{icon:1,time:1000});
+              } else {
+	                layer.msg(data.msg, { icon: 2, anim: 6, time: 1000 });
+                    }
+            
+            });
+  });
+});
+      function delAll () {
+        var data = tableCheck.getData();
+        layer.confirm('确认要全部删除吗？',function(index){
+          $.post("deleteallChat", {id: data}, function(data) {
+			  if (data.code == 200) {
+                  layer.msg(data.msg,{icon:1,time:1000},function(){
+                  $(".layui-form-checked").not('.header').parents('tr').remove();
+                  });
+              } else {
+	                layer.msg(data.msg, { icon: 2, anim: 6, time: 1000 });
+                    }
+            
+            });
+        });
+      }
+
+      function delChat(obj,id){
+        var count = $(".i_count")[0].innerText;
+        layer.confirm('确认要删除吗？',function(index){
+            $.post("deleteChat", {id: id}, function(data) {
+			  if (data.code == 200) {
+                  layer.msg(data.msg,{icon:1,time:1000},function(){
+                    $(obj).parents('tr').remove();
+                    $(".i_count").html(count-1);
+                  });
+              } else {
+	                layer.msg(data.msg, { icon: 2, anim: 6, time: 1000 });
+                    }
+            
+            });
+        });
+      }
+    </script>

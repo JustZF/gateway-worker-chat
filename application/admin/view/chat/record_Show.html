@@ -1,0 +1,83 @@
+{include file='public/head'}
+<body>
+<style type="text/css" media="screen">
+header {
+    color: black;
+}
+
+</style>
+<style>
+.layui-flow-more{position:absolute;top:0px;left:41%}
+.x-body{padding-top:50px;}
+.mysay{width:98%;margin:0;color:#3A3C4C;font-size:13px;float:right;margin-right:10px}
+.heisay{width:98%;margin:0;color:#3A3C4C;font-size:13px;float:left;margin-left:10px}
+.mysay p{text-align:right}
+.heisay p{text-align:left;display:table-cell;vertical-align:bottom;}
+.mysay span{max-width:98%;padding-left:10px;padding-right:5px;padding-top:5px;padding-bottom:5px;float:right;background-color:rgb(31, 140, 232);color:fff;border-radius: 2px;}
+.heisay span{max-width:98%;padding-left:5px;padding-right:10px;padding-top:5px;padding-bottom:5px;float:left;background-color:#EFF3F6;border-radius: 2px;}
+.portrait{width:40px;height:40px;float:left}
+.say_content{float:left}
+</style>
+<link href="__CSS__/admin/css/jquery-sina-emotion.min.css" rel="stylesheet">
+<script type="text/javascript" src="__CSS__/admin/js/jquery-sina-emotion.js"></script>
+<div class="x-body" id="list">
+
+<div class="mysay">&nbsp;</div>
+</div>
+</body>
+<script>
+	$(function(){
+	  loading(0);
+	  setTimeout(function () {
+	  window.scrollTo(0,document.body.scrollHeight);
+        },500)
+	})
+	$i=0;
+    var icon='<div class="layui-flow-more"><a href="javascript:;" onclick="loading($i*10);"><cite>加载更多</cite></a></div>';
+	var end='没有更多了';
+    $(document).on('scroll', function(event){
+    var st = $(this).scrollTop();
+    var d=$(document).height()-$(window).height();
+    var a;
+    if(st <= 0){
+		setTimeout(function () {
+		$(".layui-flow-more").html();
+        a= loading($i*10);
+		   if(a>0)
+		   {
+		    window.scrollTo(0,50);
+			$("#list").prepend(icon);
+		   }
+        },100)          
+        }
+    });
+	function loading(page) {
+	if(page=={$count})
+	{
+ 	var en=0;
+	$(".layui-flow-more").html(end);
+	return en
+	}
+    $.post('{:url('Chat/recordShowlist')}', {page:page,foid:"<?php echo $_GET['foid']?>",ftoid:"<?php echo $_GET['ftoid']?>"}, function (item) {
+	for(var i=0;i<item.length;i++){
+	if(item[i].fid==item[i].foid)
+		{
+		$("#list").prepend('<div class="mysay"><p>我&nbsp;'+item[i].time+'</p><span>'+item[i].content+'</span></div>').parseEmotion();
+		}
+		else
+		{
+        $("#list").prepend('<div class="heisay"><div class="say_content"><p>游客&nbsp;'+item[i].time+'</p><span>'+item[i].content+'</span></div></div>').parseEmotion();
+		}	
+	}
+	$i++;
+	})
+	if({$count}<=10){
+	$("#list").prepend('<div class="layui-flow-more">'+end+'</div>');
+	}
+	else
+	{
+	$("#list").prepend(icon);
+	}
+	return $i;
+	}
+</script>

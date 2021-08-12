@@ -1,0 +1,42 @@
+<html>
+
+<head>
+  <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+  <link href="http://b.cn/static/customer/css/laykefu.css" rel="stylesheet" type="text/css" />
+  <link href="http://b.cn/static/css/chat/css/jquery-sina-emotion.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="laykefu-min">咨询客服</div>
+</body>
+<script src="http://b.cn/static/customer/js/laykefu.js"></script>
+<script type="text/javascript" src="http://b.cn/static/css/chat/js/jquery-sina-emotion.js"></script>
+<script type="text/javascript">
+$(function () {
+  var cookie_name;
+  $.get("http://b.cn/chat.php/index/ajaxPing", function (data) {
+      cookie_name = data.cookiename
+      if (cookie_name != '' || cookie_name != undefined) {
+          laykefu.init({
+            group: 1,//客服分组
+            socket: '127.0.0.1:7272',//聊天服务器地址
+            face_path: '/static/customer/images/face',//表情包路径
+            upload_url: '/index/upload/uploadImg',//图片上传路径
+            room_id: cookie_name,
+          });
+      }
+  });
+})
+  // console.log(cookie_name);
+  // return;
+  // if (cookie_name != '' || cookie_name != undefined) {
+  //     laykefu.init({
+  //       group: 1,//客服分组
+  //       socket: '127.0.0.1:7272',//聊天服务器地址
+  //       face_path: '/static/customer/images/face',//表情包路径
+  //       upload_url: '/index/upload/uploadImg',//图片上传路径
+  //       room_id: cookie_name,
+  //     });
+  // }
+</script>

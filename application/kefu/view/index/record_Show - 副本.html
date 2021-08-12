@@ -1,0 +1,83 @@
+{include file='public/head'}
+<body>
+<style type="text/css" media="screen">
+header {
+    color: black;
+}
+
+</style>
+<style>
+.layui-flow-more{position:absolute;top:0px;left:41%}
+.x-body{padding-top:50px;}
+.mysay{width:98%;margin:0;color:#3A3C4C;font-size:13px;float:right;margin-right:10px}
+.heisay{width:98%;margin:0;color:#3A3C4C;font-size:13px;float:left;margin-left:10px}
+.mysay p{text-align:right}
+.heisay p{text-align:left;display:table-cell;vertical-align:bottom;}
+.mysay span{max-width:98%;padding-left:10px;padding-right:5px;padding-top:5px;padding-bottom:5px;float:right;background-color:rgb(31, 140, 232);color:fff;border-radius: 2px;}
+.heisay span{max-width:98%;padding-left:5px;padding-right:10px;padding-top:5px;padding-bottom:5px;float:left;background-color:#EFF3F6;border-radius: 2px;}
+.portrait{width:40px;height:40px;float:left}
+.say_content{float:left}
+</style>
+<link href="__CSS__/kefu/css/jquery-sina-emotion.min.css" rel="stylesheet">
+<script type="text/javascript" src="__CSS__/kefu/js/jqueryemotion.js"></script>
+<div class="x-body" id="list">
+
+
+</div>
+</body>
+<script>
+function test1() {
+    alert("我是行间事件");
+
+}
+layui.use('flow', function(){
+  var flow = layui.flow;
+  var $ = layui.jquery;
+   flow.load({
+            elem: '#list' //流加载容器
+            ,isAuto: true     //自动加载  为true的时候是自动加载
+            ,isLazyimg: true   //图片懒加载
+            ,done: function(page, next){ //加载下一页
+                $.post(
+                        "{:url('Index/recordShowlist')}",
+                        {page:page,
+						id: "<?php echo $_GET['id']?>"},
+                        function(d){
+                            var lis = [];
+                            layui.each(d.res, function(index, item){
+							if(page>='2'){
+							if(item.fid==item.foid)
+							{
+							$("#list").prepend('<div class="mysay"><p>我1&nbsp;'+item.time+'</p><span>'+item.content+'</span></div>');
+							}
+							else{
+                                $("#list").prepend('<div class="heisay"><div class="say_content"><p>游客1&nbsp;'+item.time+'</p><span>'+item.content+'</span></div></div>');
+								}
+							}
+							else{
+							if(item.fid==item.foid)
+							{
+							$("#list").prepend('<div class="mysay"><p>我&nbsp;'+item.time+'</p><span>'+item.content+'</span></div>').parseEmotion();
+							}
+							else{
+                                $("#list").prepend('<div class="heisay"><div class="say_content"><p>游客&nbsp;'+item.time+'</p><span>'+item.content+'</span></div></div>');
+								}
+							}
+                            });
+							
+                            next(lis.join(''),page < d.total_page);
+							window.scrollTo(0,100);
+                        }
+                );
+            }
+			});
+window.test = function() {
+					layui.use();
+				}
+				/*
+  $(document).on('click',function(){
+ flow.flow();
+   });
+	*/		
+});
+</script>

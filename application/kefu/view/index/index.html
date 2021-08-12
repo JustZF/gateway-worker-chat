@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>客服系统</title>
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" href="__CSS__/kefu/css/font.css">
+  <link rel="stylesheet" href="__CSS__/layui/css/layui.css">
+  <link rel="stylesheet" href="__CSS__/kefu/css/kefu.css">
+  <script type="text/javascript" src="__CSS__/kefu/css/jquery.min.js"></script>
+  <script src="__CSS__/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="__CSS__/kefu/css/kefu.js"></script>
+</head>
+
+<body onload="connect();">
+  <!-- 顶部开始 -->
+  <div class="container">
+    <div class="logo"><a href="./index.html">客服系统</a></div>
+    <div class="left_open">
+      <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+    </div>
+    <ul class="layui-nav right" lay-filter="">
+      <li class="layui-nav-item">
+        <a href="javascript:;">{:session('kefu')}</a>
+        <dl class="layui-nav-child">
+          <!-- 二级菜单 -->
+          <dd><a href="{:url('Login/logout')}">退出</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
+    </ul>
+
+  </div>
+  <!-- 顶部结束 -->
+  <!-- 中部开始 -->
+  <!-- 左侧菜单开始 -->
+  <div class="left-nav">
+    <div id="side-nav">
+      <ul id="nav">
+        <li>
+          <a href="javascript:;">
+            <i class="layui-icon"></i>
+            <cite>记录管理</cite>
+            <i class="iconfont nav_right"></i>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a _href="{:url('Index/record')}">
+                <i class="layui-icon"></i>
+                <cite> 客户列表</cite>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      </li>
+      </ul>
+    </div>
+  </div>
+  <div class="cen-nav">
+    <div class="dialogue">对话列表</div>
+    <ul id="cnav">
+
+    </ul>
+  </div>
+  <!-- 左侧菜单结束 -->
+  <!-- 右侧主体开始 -->
+  <div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+      <ul class="layui-tab-title">
+        <li class="layui-this">桌面</li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+          <iframe src="{:url('Index/welcome')}" name="myFrameName" frameborder="0" scrolling="yes"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-content-bg"></div>
+  <!-- 右侧主体结束 -->
+  <!-- 中部结束 -->
+  <!-- 底部开始 -->
+  <div class="footer">
+    <div class="copyright">Copyright Reserved</div>
+  </div>
+  <!-- 底部结束 -->
+  <script type="text/javascript">
+    if (typeof console == "undefined") { this.console = { log: function (msg) { } }; }
+    WEB_SOCKET_SWF_LOCATION = "__CSS__/kefu/swf/WebSocketMain.swf";
+    WEB_SOCKET_DEBUG = true;
+    var ws;
+    list();
+    function connect() {
+      ws = new WebSocket("ws://你的服务器公网ip和端口号");
+
+      ws.onmessage = onmessage;
+      ws.onclose = function () {
+        console.log("连接关闭，定时重连");
+        connect();
+      };
+      ws.onerror = function () {
+        console.log("出现错误");
+      };
+    }
+    function onmessage(e) {
+      let sessionkey = "{:session('kefu')}";
+
+      var data = JSON.parse(e.data);
+     console.log(data);
+      switch (data['type']) {
+        case 'login':
+          var bild = '{"type":"bild","room_id":"'+sessionkey+'"}';
+
+          ws.send(bild);
+          break;
+        case 'bild':
+          var id = data.room_id;
+          if (!id) {
+            alert('房间出错！');
+          }
+          break;
+        case "say":
+          list(data);
+          return;
+      }
+
+    }
+    function list(room_id) {
+      var url = "{:url('Index/duihua')}"
+      $("#cnav").html("");
+      $.post("{:url('Index/get_list')}", room_id, function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].isonline == '1') {
+            if (data[i].weiducount >= '1') {
+              $("#cnav").append('<li class="isonline"><a _href="'+ url +'?toid=' + data[i].fid + '" layid="' + data[i].fid + '"><cite>游客'+i+'</cite><dd>' + data[i].content + '</dd><dd class="time">' + data[i].time + '</dd></a><em>' + data[i].weiducount + '</em></li>');
+            }
+            else {
+              $("#cnav").append('<li class="isonline"><a _href="'+ url +'?toid=' + data[i].fid + '" layid="' + data[i].fid + '"><cite>游客'+i+'</cite><dd>' + data[i].content + '</dd><dd class="time">' + data[i].time + '</dd></a></li>');
+            }
+          }
+          else {
+            if (data[i].weiducount >= '1') {
+              $("#cnav").append('<li><a _href="'+ url +'?toid=' + data[i].fid + '" layid="' + data[i].fid + '"><cite>游客'+i+'</cite><dd>' + data[i].content + '</dd><dd class="time">' + data[i].time + '</dd></a><em>' + data[i].weiducount + '</em></li>');
+            }
+            else {
+              $("#cnav").append('<li><a _href="'+ url +'?toid=' + data[i].fid + '" layid="' + data[i].fid + '"><cite>游客'+i+'</cite><dd>' + data[i].content + '</dd><dd class="time">' + data[i].time + '</dd></a></li>');
+            }
+          }
+        }
+      });
+    }
+    layui.use('element', function () {
+      var element = layui.element;
+        //一些事件监听
+        element.on('tab(xbs_tab)', function (data) {
+            delCookie("fid")
+            setCookie("fid", $(this).attr('lay-id'));
+            list({ room_id: $(this).attr('lay-id') });
+        });
+    });
+    function setCookie(cname, cvalue) {
+      document.cookie = cname + "=" + cvalue;
+    }
+    function getCookie(c_name) {
+      if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+          c_start = c_start + c_name.length + 1
+          c_end = document.cookie.indexOf(";", c_start)
+          if (c_end == -1) c_end = document.cookie.length
+          return unescape(document.cookie.substring(c_start, c_end))
+        }
+      }
+      return ""
+    }
+    function delCookie(name) {
+      var exp = new Date();
+      exp.setTime(exp.getTime() - 1);
+      var cval = getCookie(name);
+      if (cval != null)
+        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    }
+  </script>
+</body>
+
+</html>

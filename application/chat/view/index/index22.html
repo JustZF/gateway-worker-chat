@@ -1,0 +1,222 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>聊天室</title>
+    <script type="text/javascript" src="__CSS__/chat/js/jquery.min.js"></script>
+    <link href="__CSS__/chat/css/jquery-sina-emotion.min.css" rel="stylesheet">
+    <link href="__CSS__/chat/css/chat.css" rel="stylesheet">
+    <script type="text/javascript" src="__CSS__/chat/js/jquery-sina-emotion.js"></script>
+    <script type="text/javascript" src="__CSS__/chat/js/swfobject.js"></script>
+    <script type="text/javascript" src="__CSS__/chat/js/web_socket.js"></script>
+<body onload="connect();">
+<div class="newWindow ">
+    <div class="window-header">
+        <img src="/static/css/chat/img/0.jpg" width="40px" height="40px"
+             style="margin-right:10px;float:left;margin-top:4px;border-radius:2px;" alt="头像">
+        <p class="company-name font16">客服</p>
+        <p class="autograph font12" title="为您在线解答售前(5&times;8)、售后咨询(7&times;24)服务">为您在线解答售前(5&times;8)、售后咨询(7&times;24)服务</p>
+    </div>
+    <div class="window-content">
+        <div class="content-left">
+            <div class="chat-content">
+            </div>
+            <div class="pc-visitor-footer">
+                <form>
+                    <div class="function-bar">
+                        <div class="talk-function-bar">
+                            <div class="svgWrap">
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <label class="changeColor-wrap">
+                                    <svg data-title="表情" class="function-icon icon-face face" width="24px" height="24px"
+                                         viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink"><!-- 表情 -->
+                                        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g id="Imported-Layers-Copy-7">
+                                                <rect id="Rectangle-3" x="0" y="0" width="24" height="24"></rect>
+                                                <path class="svgColor"
+                                                      d="M5,12 C5,15.8656805 8.1343195,19 12,19 C15.8656805,19 19,15.8656805 19,12 C19,8.1343195 15.8656805,5 12,5 C8.1343195,5 5,8.1343195 5,12 Z M3,12 C3,7.02975 7.02975,3 12,3 C16.97025,3 21,7.02975 21,12 C21,16.97025 16.97025,21 12,21 C7.02975,21 3,16.97025 3,12 Z"
+                                                      id="Combined-Shape" fill="#8FA1B3" fill-rule="nonzero"></path>
+                                                <path class="svgColor"
+                                                      d="M9,8 C8.172,8 7.5,8.672 7.5,9.5 C7.5,10.328 8.172,11 9,11 C9.828,11 10.5,10.328 10.5,9.5 C10.5,8.672 9.828,8 9,8"
+                                                      id="Fill-2" fill="#8FA1B3"></path>
+                                                <path class="svgColor"
+                                                      d="M15,8 C14.172,8 13.5,8.672 13.5,9.5 C13.5,10.328 14.172,11 15,11 C15.828,11 16.5,10.328 16.5,9.5 C16.5,8.672 15.828,8 15,8"
+                                                      id="Fill-2-Copy" fill="#8FA1B3"></path>
+                                                <path class="svgColor"
+                                                      d="M9.55730755,18.9802954 C12.5582692,18.9802954 15.0860829,16.7646048 15.4989445,13.8196019 C15.5756198,13.2726656 15.1943979,12.7671285 14.6474616,12.6904532 C14.1005252,12.6137779 13.5949881,12.9949998 13.5183128,13.5419361 C13.2434436,15.5026194 11.5576081,16.9802954 9.55730755,16.9802954 C9.0050228,16.9802954 8.55730755,17.4280106 8.55730755,17.9802954 C8.55730755,18.5325801 9.0050228,18.9802954 9.55730755,18.9802954 Z"
+                                                      id="Oval-26" fill="#8FA1B3" fill-rule="nonzero"
+                                                      transform="translate(12.033030, 15.830470) rotate(39.000000) translate(-12.033030, -15.830470) "></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inputArea">
+                        <textarea class="textarea" id="textarea" name="content" placeholder="请输入文字"></textarea>
+                    </div>
+                </form>
+                <p class="toDeveloperP">
+                </p>
+                <span class="send-btn submit-btn-wrap">发送</span>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="content-right-top font14">关于我们</div>
+            <div class="company-content font12">
+                <!--<p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">-->
+                    <!--<span style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; font-size: 14px;"><strong-->
+                            <!--style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;">客服</strong></span>-->
+                <!--</p>-->
+                <!--<p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">-->
+                    <!--<span style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;"></span>-->
+                <!--</p>-->
+                <p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">
+                    <br/><span
+                        style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;">服务时间：</span>
+                </p>
+                <p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">
+                    <span style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; font-family: SimSun; color: rgb(255, 0, 0); font-weight: bold;">8:00-24:00</span><span
+                        style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;">，其他时间可给我们留言</span>
+                </p>
+                <!--<p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">-->
+                    <!--<br/><span-->
+                        <!--style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;">400 热线：</span>-->
+                <!--</p>-->
+                <!--<p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">-->
+                    <!--<span style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;"><strong-->
+                            <!--style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;"><span-->
+                            <!--style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; font-family: SimSun; color: rgb(255, 0, 0);">400-000-0000</span></strong></span>-->
+                <!--</p>-->
+                <p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; max-width: 100%; color: rgb(40, 51, 75); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; letter-spacing: 0.6px; white-space: normal; background-color: rgb(255, 255, 255);">
+                    <span style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box;"><span
+                            class="contact-line4"
+                            style="margin: 0px; padding: 0px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); line-height: 1.5; box-sizing: border-box; color: rgb(255, 0, 0);">对话交谈中请勿关闭此窗口！</span></span>
+                </p>
+                <p><br/></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    if (typeof console == "undefined") {
+        this.console = {
+            log: function (msg) {
+            }
+        };
+    }
+    WEB_SOCKET_SWF_LOCATION = "__CSS__/chat/swf/WebSocketMain.swf";
+    WEB_SOCKET_DEBUG = true;
+    var ws;
+
+    function connect() {
+        ws = new WebSocket("ws://{$sysconfig['gateway']}");
+        ws.onmessage = onmessage;
+        ws.onclose = function () {
+            console.log("连接关闭，定时重连");
+            connect();
+        };
+        ws.onerror = function () {
+            console.log("出现错误");
+        };
+    }
+
+
+    function onmessage(e) {
+        console.log("收到服务端的消息：" + e.data);
+        var data = JSON.parse(e.data);
+        switch (data['type']) {
+            case 'login':
+                var bild = '{"type":"bild","room_id":"{$Think.cookie.name}"}';
+                ws.send(bild);
+                break;
+            case 'bild':
+                var id = data.room_id;
+                if (!id) {
+                    alert('房间出错！');
+                }
+                break;
+            case "say":
+                $(".chat-content").append('<div class="heisay"><img class="portrait" src="/static/css/chat/img/0.jpg"><div class="say_content"><p>客服' + data.time.substr(10, 9) + '</p><span>' + data.content + '</span></div></div>').parseEmotion();
+                $(".chat-content").scrollTop(3000);
+                return;
+            case "save":
+                save_message(data);
+                return;
+        }
+    }
+
+    $(".send-btn").click(function () {
+        var text = $(".textarea").val();
+        //解析新浪微博图片
+        text.replace(/(http|https):\/\/[\w]+.sinaimg.cn[\S]+(jpg|png|gif)/gi, function (img) {
+                return "<a target='_blank' href='" + img + "'>" + "<img src='" + img + "'>" + "</a>";
+            }
+        );
+        //解析url
+        text.replace(/(http|https):\/\/[\S]+/gi, function (url) {
+                if (url.indexOf(".sinaimg.cn/") < 0)
+                    return "<a target='_blank' href='" + url + "'>" + url + "</a>";
+                else
+                    return url;
+            }
+        );
+        console.log(text)
+        if (text == '') {
+            return;
+        }
+        var time = getNowFormatDate();
+        var message = '{"content":"' + text + '","type":"say","room_id":"{$Think.cookie.name}","toid":"{$chat_user}"}';
+        $(".chat-content").append('<div class="mysay"><p>我&nbsp;' + time + '</p><span>' + text + '</span></div>').parseEmotion();
+        $(".chat-content").scrollTop(3000);
+        ws.send(message);
+        $(".textarea").val("");
+    })
+    $('.face').click(function (event) {
+        $(this).sinaEmotion();
+        event.stopPropagation();
+    });
+
+    document.write('<meta name="viewport" content="width=device-width,initial-scale=1">');
+    $("textarea").on("keydown", function (e) {
+        // 按enter键自动提交
+        if (e.keyCode === 13 && !e.ctrlKey) {
+            e.preventDefault();
+            $(".send-btn").click();
+            return false;
+        }
+        // 按ctrl+enter组合键换行
+        if (e.keyCode === 13 && e.ctrlKey) {
+            $(this).val(function (i, val) {
+                return val + "\n";
+            });
+        }
+    });
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var currentdate = date.toLocaleTimeString();
+        return currentdate;
+    }
+
+    function save_message(data) {
+        $.post("{:url('Index/save_message')}", data, function (data) {
+        });
+    }
+
+    $(function () {
+        $.post("{:url('Index/chat_record')}", "foid={$chat_user}", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].fid !== '{$Think.cookie.name}') {
+                    $(".chat-content").append('<div class="heisay"><img class="portrait" src="/static/css/chat/img/0.jpg"><div class="say_content"><p>客服' + data[i].time.substr(10, 9) + '</p><span>' + data[i].content + '</span></div></div>').parseEmotion();
+                } else {
+                    console.log(data[i].content)
+                    $(".chat-content").append('<div class="mysay"><p>我&nbsp;' + data[i].time.substr(10, 9) + '</p><span>' + data[i].content + '</span></div>').parseEmotion();
+                }
+            }
+            $(".chat-content").append('<div class="mysay">&nbsp;</div>');
+            $(".chat-content").scrollTop(3000);
+        });
+    })
+</script>

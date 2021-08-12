@@ -1,0 +1,32 @@
+{include file="public/head"}
+    <body>
+    <div class="x-body">
+        <button onclick="javascript:location.reload()" class="layui-btn layui-btn-small">刷新</button>
+        <span class="x-right" style="line-height:40px">共有数据:<i class="i_count">{$list->total()}</i>条</span>
+    <table class="layui-table">
+        <thead>
+          <tr>
+            <th>客户名</th>
+			<th>最近记录</th>
+            <th>最近时间</th>
+			<th>操作</th>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        	<tr>
+	            <td>{$vo.ftoid}</td>
+				<td>{$vo.content}</td>
+	            <td>{$vo.time}</td>	
+                <td><button class="layui-btn layui-btn-mini" onclick="x_admin_show('查看详细记录','recordShow.html?foid={$vo.foid}&ftoid={$vo.ftoid}',500,480);">详情</button></td>				
+	        </tr>
+        {/volist}
+    
+        </tbody>
+      </table>
+	      <div class="page">
+	        <div>
+	        	{$list->render()}
+	        </div>
+	      </div>
+    </div>
+</body>
